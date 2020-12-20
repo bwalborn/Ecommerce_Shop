@@ -1,0 +1,22 @@
+{
+  "name": "ecommerce_shop",
+  "version": "1.0.0",
+  "description": "MERN shopping cart app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bwalborn/Ecommerce_Shop.git"
+  },
+  "author": "Bryce Walborn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bwalborn/Ecommerce_Shop/issues"
+  },
+  "homepage": "https://github.com/bwalborn/Ecommerce_Shop#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
