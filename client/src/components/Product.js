@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Col } from 'react-bootstrap';
-import Products from '../products';
 import Rating from './Rating';
 
 const Product = ({ product }) => {

@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import Product from '../components/Product';
-import Products from '../products';
+import axios from 'axios';
 
 const HomeView = () => {
+  const [Products, setProducts] = useState([]);
+  
+useEffect(() => {
+  const fetchProducts = async () => {
+    const { data } = await axios.get('/api/products');
+
+    setProducts(data);
+  }
+
+  fetchProducts();
+}, []) // <= array of dependencies (anything that you want useEffect to fire off then they change)
+
+
   return (
     <>
         <h1>Latest Products</h1>
@@ -21,5 +34,3 @@ const HomeView = () => {
 }
 
 export default HomeView;
-
-{/* <h3>{product.name}</h3> */}
