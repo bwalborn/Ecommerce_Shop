@@ -12,7 +12,7 @@ import { listProductDetails } from '../actions/productActions';
 const ProductView = ({ history, match }) => {
     // const product = Products.find(p => p._id === match.params.id)
     // const [product, setProduct] = useState({});
-    const [qty, setQty] = useState(0)
+    const [qty, setQty] = useState(1); // initial qty amount = 1
 
     const dispatch = useDispatch();
     const productDetails = useSelector(state => state.productDetails);
