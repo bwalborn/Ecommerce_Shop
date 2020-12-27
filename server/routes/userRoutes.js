@@ -1,6 +1,7 @@
 import express from 'express';
 const router = express.Router();
-import { authUser } from '../controllers/userController.js';
+import { authUser, getUserProfile } from '../controllers/userController.js';
+import  { protect } from '../middleware/authMiddleware.js';
 
 // ---- ROUTES: pointing to specific controller functions ----
 
@@ -8,6 +9,9 @@ import { authUser } from '../controllers/userController.js';
 // or
 
 router.post('/login', authUser);
+
+router.route('/profile').get(protect, getUserProfile);
+
 
 
 // router.get('/:id', getProductById)
