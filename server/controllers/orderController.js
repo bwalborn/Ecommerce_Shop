@@ -1,5 +1,5 @@
 import asyncHandler from 'express-async-handler'
-import Product from '../models/productModel.js';
+import Order from '../models/orderModel.js'
 
 
 // ----- CONTROLLER with all the functions for the routes -----
@@ -16,8 +16,8 @@ const addOrderItems = asyncHandler(async (req, res) => {
 
     if(orderItems && orderItems.length === 0) {
         res.status(400);
-        throw new Error('No order items')
-        return
+        throw new Error('No order items');
+        // return
     } else {
         const order = new Order({
             user: req.user._id,
@@ -31,4 +31,4 @@ const addOrderItems = asyncHandler(async (req, res) => {
     }
 })
 
-export { addOrderItems }
+export { addOrderItems };
