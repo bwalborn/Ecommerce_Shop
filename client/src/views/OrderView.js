@@ -29,12 +29,17 @@ const OrderView = ({ match }) => {
 
     }
 
-
-
     useEffect(() => {
-        dispatch(getOrderDetails(orderId));
-        // eslint-disable-next-line
-    },[])
+        if(!order || order._id !== orderId) {
+            dispatch(getOrderDetails(orderId))
+        }
+    }, [order, orderId]) 
+    
+
+    // useEffect(() => {
+    //     dispatch(getOrderDetails(orderId));
+    //     // eslint-disable-next-line
+    // },[])
 
 
     return loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> 
