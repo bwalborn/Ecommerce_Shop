@@ -12,6 +12,7 @@ import ProfileView from './views/ProfileView';
 import ShippingView from './views/ShippingView';
 import PaymentView from './views/PaymentView';
 import PlaceOrderView from './views/PlaceOrderView';
+import OrderView from './views/OrderView';
 
 
 
@@ -24,6 +25,7 @@ const App = () => {
       <Header />
         <main className='py-3'>
             <Container>
+              <Route path='/order/:id' component={OrderView} />
               <Route path='/shipping' component={ShippingView} />
               <Route path='/payment' component={PaymentView} />
               <Route path='/placeorder' component={PlaceOrderView} />
