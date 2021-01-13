@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node server/index",
-    "server": "nodemon server/index",
+    "start": "node server/server",
+    "server": "nodemon server/server",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node server/seeder",
