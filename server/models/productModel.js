@@ -9,6 +9,10 @@ const reviewSchema =  mongoose.Schema({
     timestamps: true
 })
 
+const imageSchema = mongoose.Schema({
+    text: { type : String, requried: true }
+})
+
 const productSchema = mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
