@@ -17,7 +17,8 @@ const Header = () => {
 
     return (
         <header>
-            <Navbar bg="dark" variant='dark' expand="lg" collapseOnSelect>
+            {/* <Navbar bg="dark" variant='dark' expand="lg" collapseOnSelect style={{height : '70px'}}> */}
+            <Navbar bg="light"  expand="lg" collapseOnSelect style={{height : '70px', color: 'light-gray'}}>
             <Container>
                 <LinkContainer to='/'>
                 <Navbar.Brand >EcommerceShop</Navbar.Brand>
