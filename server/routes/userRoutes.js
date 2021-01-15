@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import { authUser, registerUser, getUserProfile, updateUserProfile, getUsers } from '../controllers/userController.js';
+import { authUser, registerUser, getUserProfile, updateUserProfile, getUsers, deleteUsers } from '../controllers/userController.js';
 import  { protect, isAdmin } from '../middleware/authMiddleware.js';
 
 // ---- ROUTES: pointing to specific controller functions ----
@@ -13,7 +13,7 @@ router.post('/login', authUser);
 
 router.route('/profile').get(protect, getUserProfile).put(protect, updateUserProfile);
 
-
+router.route('/:id').delete(protect, isAdmin, deleteUsers);
 
 // router.get('/:id', getProductById)
 // or
