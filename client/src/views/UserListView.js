@@ -26,6 +26,7 @@ const UserListView = ({ history }) => {
         } else {
             history.push('/login')
         }
+        // eslint-disable-next-line
     }, [dispatch, history, successDelete])
 
     const deleteHandler = (id) => {
