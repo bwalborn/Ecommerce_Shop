@@ -5,6 +5,7 @@ import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import Rating from '../components/Rating';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
+import ImageSelector from '../components/ImageSelector';
 import { listProductDetails } from '../actions/productActions';
 
 
@@ -31,6 +32,33 @@ const ProductView = ({ history, match }) => {
         history.push(`/cart/${match.params.id}?qty=${qty}`)
       }
 
+
+    //   const imageSelector = () => {
+    //       const mainImg = e.target.value
+    //       return (
+    //         <>
+    //             <Image src={product.image} alt={product.name} fluid />
+    //             <HandleImageSelector onClick={(e) => product.images} />
+    //         </>
+    //       );
+    //   }
+
+
+    //   const HandleImageSelector = (e) => ({array}) => {
+    //     // e.preventDefault();
+    //     const selectImage = e.target.value ? e.target.value : product.images[0];
+    //     array.indexOf()
+    //     return (
+    //         <>
+    //         {/* <Image src={selectImage} alt={product.name} style={{margin: '1rem'}} fluid /> */}
+    //             <Row md={4}>
+    //                 {array.images.map(image => (
+    //                     <Image src={image} alt={array.name} style={{margin: '1rem'}} fluid />
+    //                     ))}
+    //             </Row>
+    //         </>
+    //     )}
+
   return (
    <>
    <Link className='btn btn-light my-3' to='/'>
@@ -39,7 +67,17 @@ const ProductView = ({ history, match }) => {
    {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
    <Row>
        <Col md={6}>
+           {}
             <Image src={product.image} alt={product.name} fluid />
+            {/* <Col md={4} style={{margin: '1rem 0'}} ><Image src={product.image} alt={product.name} fluid /></Col> */}
+            {/* THIS WILL TAKE IN AN ARRAY OF IMAGES AS A PROP -> HAVE AN ONSELECT OPTION WHICH WILL DETERMINE THE LAYOUT 
+             -> NEED TO UPDATE THE MODEL FIRST!*/}
+
+            {/* <ImageSelector images={product.image} /> */}
+            {/* <Row md={4} style={{alignItems: 'center'}}><Image src={product.image} alt={product.name} style={{margin: '1em'}} fluid /><Image src={product.image} alt={product.name} style={{margin: '1em'}} fluid /><Image src={product.image} alt={product.name} style={{margin: '1em'}} fluid /></Row> */}
+            
+
+
        </Col>
        <Col md={3}>
             <ListGroup variant='flush'>
