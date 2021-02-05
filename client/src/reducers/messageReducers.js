@@ -1,4 +1,4 @@
-import { MESSAGE_CREATE_FAIL, MESSAGE_CREATE_REQUEST, MESSAGE_CREATE_SUCCESS, MESSAGE_DELETE_FAIL, MESSAGE_DELETE_REQUEST, MESSAGE_DELETE_SUCCESS, MESSAGE_DETAILS_FAIL, MESSAGE_DETAILS_REQUEST, MESSAGE_DETAILS_RESET, MESSAGE_DETAILS_SUCCESS, MESSAGE_LIST_FAIL, MESSAGE_LIST_REQUEST, MESSAGE_LIST_RESET, MESSAGE_LIST_SUCCESS } from "../constants/messageConstants";
+import { MESSAGE_CREATE_FAIL, MESSAGE_CREATE_REQUEST, MESSAGE_CREATE_RESET, MESSAGE_CREATE_SUCCESS, MESSAGE_DELETE_FAIL, MESSAGE_DELETE_REQUEST, MESSAGE_DELETE_SUCCESS, MESSAGE_DETAILS_FAIL, MESSAGE_DETAILS_REQUEST, MESSAGE_DETAILS_RESET, MESSAGE_DETAILS_SUCCESS, MESSAGE_LIST_FAIL, MESSAGE_LIST_REQUEST, MESSAGE_LIST_RESET, MESSAGE_LIST_SUCCESS } from "../constants/messageConstants";
 
 
 export const messageCreateReducer = (state = {}, action) => {
@@ -9,6 +9,8 @@ export const messageCreateReducer = (state = {}, action) => {
             return { loading: false, messageInfo: action.payload, success: true};
         case MESSAGE_CREATE_FAIL:
             return { loading: false, error: action.payload };
+        case MESSAGE_CREATE_RESET:
+            return {};
         default:
             return state;
     }

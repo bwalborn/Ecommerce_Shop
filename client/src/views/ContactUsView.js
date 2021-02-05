@@ -6,6 +6,7 @@ import FormContainer from '../components/FormContainer';
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { createMessage } from '../actions/messageActions'
+import { MESSAGE_CREATE_RESET } from '../constants/messageConstants';
 
 
 
@@ -36,12 +37,12 @@ const ContactUsView = () => {
     const showResults = async ({firstName, lastName, email, messageBody}) => {        
         if (firstName !== undefined && lastName !== undefined && email !== undefined && messageBody !== undefined) {
                     dispatch(createMessage(firstName, lastName, email, messageBody))
-                    if (success) {
-                        setFormSubmitted('Success - Form submitted')
-                    } 
-                    if (error) {
-                        setMessageAlert('Invalid - Form must be submitted properly')
-                    }
+                    // if (success) {
+                    //     setFormSubmitted('Success - Form submitted')
+                    // } 
+                    // if (error) {
+                    //     setMessageAlert('Invalid - Form must be submitted properly')
+                    // }
                 } 
             }
         
@@ -51,12 +52,13 @@ const ContactUsView = () => {
         }
 
         useEffect( async () => {
-            // if (success) {
-            //     setFormSubmitted('Success - Form submitted')
-            // } 
-            // if (error) {
-            //     setMessageAlert('Invalid - Form must be submitted properly')
-            // }
+            dispatch({ type: MESSAGE_CREATE_RESET });
+            if (success) {
+                setFormSubmitted('Success - Form submitted')
+            } 
+            if (error) {
+                setMessageAlert('Invalid - Form must be submitted properly')
+            }
                 await sleep(4000);
                 setFormSubmitted(null)
                 setMessageAlert(null)
@@ -66,10 +68,10 @@ const ContactUsView = () => {
     return (
        <FormContainer > 
             <h3 className='title'>Contact Us</h3>
-            {/* {messageAlert && <Message variant='danger'>{messageAlert}</Message>} */}
+            {messageAlert && <Message variant='danger'>{messageAlert}</Message>}
+            {/* {success === true ? (formSubmitted && <Message variant='success'>{formSubmitted}</Message>) : error !== undefined ? (messageAlert && <Message variant='danger'>{messageAlert}</Message>) : null} */}
             {/* {messageAlert !== null ? (messageAlert && <Message variant='danger'>{messageAlert}</Message>) : (formSubmitted && <Message variant='success'>{formSubmitted}</Message>)} */}
-            {success === true ? (formSubmitted && <Message variant='success'>{formSubmitted}</Message>) : error !== undefined ? (messageAlert && <Message variant='danger'>{messageAlert}</Message>) : null}
-            {/* {formSubmitted && <Message variant='success'>{formSubmitted}</Message>} */}
+            {formSubmitted && <Message variant='success'>{formSubmitted}</Message>}
            {/* {error && <Message variant='danger'>{error}</Message>} */}
             {loading && <Loader />}
 
