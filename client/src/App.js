@@ -18,6 +18,7 @@ import ContactUsView from './views/ContactUsView';
 import UserEditView from './views/UserEditView';
 import ProductListView from './views/ProductListView';
 import MessageListView from './views/MessageListView';
+import ProductEditView from './views/ProductEditView';
 
 
 
@@ -39,6 +40,7 @@ const App = () => {
               <Route path='/register' component={RegisterView} />
               <Route path='/profile' component={ProfileView} />
               <Route path='/product/:id' component={ProductView} />
+              <Route path='/admin/product/:id/edit' component={ProductEditView} />
               <Route path='/cart/:id?' component={CartView} />
               <Route path='/admin/userlist' component={UserListView} />
               <Route path='/admin/messagelist' component={MessageListView} />
