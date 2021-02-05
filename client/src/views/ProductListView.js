@@ -37,6 +37,7 @@ const ProductListView = ({ history, match }) => {
         } else {
             dispatch(listProducts())
         }
+        // eslint-disable-next-line
     }, [dispatch, history, userInfo, successDelete, successCreate, createProduct ])
 
     const deleteHandler = (id) => {

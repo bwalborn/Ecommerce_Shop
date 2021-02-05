@@ -24,8 +24,8 @@
 
 
 import React, { useState} from 'react'
-import { Row, Col, Image} from 'react-bootstrap';
-
+import { Row, Image} from 'react-bootstrap';
+//Col
 
 
 const ImageSelector = (props) => {

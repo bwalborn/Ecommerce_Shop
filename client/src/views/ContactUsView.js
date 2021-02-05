@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Form, Field, FormSpy } from 'react-final-form';
+import { Form, Field } from 'react-final-form';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
@@ -16,7 +16,7 @@ const ContactUsView = () => {
     const dispatch = useDispatch();
 
     const messageCreate = useSelector(state => state.messageCreate);
-    const { loading, error, success, messageInfo } = messageCreate;
+    const { loading, error, success } = messageCreate;  // -> messageInfo
 
     const [messageAlert, setMessageAlert] = useState(null);
     // const [formInformation, setFormInformation] = useState(null);
@@ -24,34 +24,27 @@ const ContactUsView = () => {
 
     
     // // function of functions ()=>()=>
-
     const requiredLetterCount = (val) => val && val.length > 2 && val.length <= 20 ? undefined : 'Required';
     const requiredEmail = (val) => val &&  /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val) ? undefined : 'Required';
     const requiredMinMaxLength = (val) => val && val.length >= 5 && val.length <= 350 ? undefined : 'Required';
     
-
-    const handleChange = () => {
-
-    }
     
     const showResults = async ({firstName, lastName, email, messageBody}) => {        
         if (firstName !== undefined && lastName !== undefined && email !== undefined && messageBody !== undefined) {
                     dispatch(createMessage(firstName, lastName, email, messageBody))
-                    // if (success) {
-                    //     setFormSubmitted('Success - Form submitted')
-                    // } 
-                    // if (error) {
-                    //     setMessageAlert('Invalid - Form must be submitted properly')
-                    // }
                 } 
             }
-        
+            
+            // const sleep = (ms) => {
+            //     return new Promise(resolve => setTimeout(resolve, ms));
+            // }
+            // const timer = async () => {
+            //     await sleep(4000);
+            //     setFormSubmitted(null)
+            //     setMessageAlert(null)
+            // }
 
-        const sleep = (ms) => {
-            return new Promise(resolve => setTimeout(resolve, ms));
-        }
-
-        useEffect( async () => {
+        useEffect( () => {
             dispatch({ type: MESSAGE_CREATE_RESET });
             if (success) {
                 setFormSubmitted('Success - Form submitted')
@@ -59,11 +52,9 @@ const ContactUsView = () => {
             if (error) {
                 setMessageAlert('Invalid - Form must be submitted properly')
             }
-                await sleep(4000);
-                setFormSubmitted(null)
-                setMessageAlert(null)
-                
-            },[ success, error ])
+            // timer();
+
+            },[ dispatch, success, error, ])
 
     return (
        <FormContainer > 
@@ -72,7 +63,7 @@ const ContactUsView = () => {
             {/* {success === true ? (formSubmitted && <Message variant='success'>{formSubmitted}</Message>) : error !== undefined ? (messageAlert && <Message variant='danger'>{messageAlert}</Message>) : null} */}
             {/* {messageAlert !== null ? (messageAlert && <Message variant='danger'>{messageAlert}</Message>) : (formSubmitted && <Message variant='success'>{formSubmitted}</Message>)} */}
             {formSubmitted && <Message variant='success'>{formSubmitted}</Message>}
-           {/* {error && <Message variant='danger'>{error}</Message>} */}
+           {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
 
 
@@ -117,7 +108,6 @@ const ContactUsView = () => {
                             )}
                         </Field>
                 <Button type='submit' style={{margin: '2rem 0', width: '8rem'}} disabled={submitting} >Submit</Button>
-                {/* <FormSpy subscription={{values:true}}>{({values}) => <pre>{JSON.stringify(values)}</pre>}</FormSpy>     */}
             </form>
             )}
             </Form>
