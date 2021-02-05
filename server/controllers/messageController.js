@@ -7,10 +7,10 @@ import Message from '../models/messageModel.js'
 
 
 // @desc      Create new message
-// @route     POST /api/message
+// @route     POST /api/messages
 // @access    Public
 const addMessage = asyncHandler(async (req, res) => {
-    const { firstName, lastName, emailAddress, messageBody } = req.body;
+    const { firstName, lastName, email, messageBody } = req.body;
 
     if(messageBody && messageBody.length === 0) {
         res.status(400);
@@ -18,7 +18,7 @@ const addMessage = asyncHandler(async (req, res) => {
         // return
     } else {
         const message = new Message({
-            firstName, lastName, emailAddress, messageBody
+            firstName, lastName, email, messageBody
         });
 
         const createdMessage = await message.save();
@@ -28,61 +28,46 @@ const addMessage = asyncHandler(async (req, res) => {
 
 
 
-// @desc      Get order by ID
-// @route     GET /api/orders/:id
-// @access    Private
-const getOrderById = asyncHandler(async (req, res) => {
-    const order = await Order.findById(req.params.id).populate('user', 'name email');
-
-    if(order) {
-        res.json(order);
-    } else {
-        res.status(404);
-        throw new Error('Order not found')
-    }
-})
-
-
-
-
-// @desc      Update order to paid
-// @route     GET /api/orders/:id/pay
-// @access    Private
-const updateOrderToPaid = asyncHandler(async (req, res) => {
-    const order = await Order.findById(req.params.id);
-
-    if(order) {
-        order.isPaid = true;
-        order.paidAt = Date.now();
-        order.paymentResult = {
-            id: req.body.id,
-            status: req.body.status,
-            update_time: req.body.update_time,
-            email_address: req.body.payer.email_address,
-        }
-
-        const updateOrder = await order.save();
-
-        res.json(updateOrder)
-
-    } else {
-        res.status(404);
-        throw new Error('Order not found')
-    }
-})
-
-
-
-
-
 // @desc      Fetch all messages
 // @route     GET /api/messages
-// @access    Public
+// @access    Private/Admin
 const getAllMessages = asyncHandler(async (req, res) => {
     const messages = await Message.find({})
 
     res.json(messages);
 })
 
-// export { addOrderItems, getOrderById, updateOrderToPaid, getMyOrders };
-export { };
+
+// @desc      fetch single message
+// @route     GET /api/messages/:id
+// @access    Private/Admin
+const getMessageById = asyncHandler(async (req, res) => {
+    const message = await Message.findById(req.params.id);
+
+    if(message) {
+        res.json(message);
+    } else {
+        res.status(404);
+        throw new Error("Product not found");
+    }
+})
+
+
+// @desc      Delete message
+// @route     DELETE /api/messages/:id
+// @access    Private/Admin
+const deleteMessage = asyncHandler(async (req, res) => {
+    const message = await Message.findById(req.params.id);
+
+    if(message) {
+        await message.remove();
+        res.json({ message: 'Message removed' });
+    } else {
+        res.status(404);
+        throw new Error("Message not found");
+    }
+})
+
+
+
+export { addMessage, getAllMessages, getMessageById, deleteMessage };

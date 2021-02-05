@@ -1,94 +1,83 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Form, Field, FormSpy } from 'react-final-form';
-// import { useDispatch, useSelector } from 'react-redux';
-// import Message from '../components/Message';
-// import Loader from '../components/Loader';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
 import { Button } from 'react-bootstrap';
-
-// import './ContactUsView.css'
+import { useDispatch, useSelector } from 'react-redux';
+import { createMessage } from '../actions/messageActions'
 
 
 
 
 const ContactUsView = () => {
 
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
 
-    // const dispatch = useDispatch();
+    const messageCreate = useSelector(state => state.messageCreate);
+    const { loading, error, success, messageInfo } = messageCreate;
 
-    // const userLogin = useSelector(state => state.userLogin);
-    // const { loading, error, userInfo } = userLogin;
+    const [messageAlert, setMessageAlert] = useState(null);
+    // const [formInformation, setFormInformation] = useState(null);
+    const [formSubmitted, setFormSubmitted] = useState(null);
 
-    // const redirect = location.search ? location.search.split('=')[1] : '/';
-
-    /// WILL GO IN SHOW RESULTS
-    // const submitHandler = (e) => {
-    //     e.preventDefault();
-    //     // DISPATCH LOGIN
-    //     dispatch(login(email, password))
-    // }
-
-
-
-
-
-
-
+    
     // // function of functions ()=>()=>
-    // const maxLength = (len) => (val) => !(val) || (val.length <= len);
-    // const minLength = (len) => (val) => (val) && (val.length >= len);
-    // const isNumber = (val) => !isNaN(Number(val));
-    // const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
-    // const required = (val) => val ? undefined : 'Required';
+
     const requiredLetterCount = (val) => val && val.length > 2 && val.length <= 20 ? undefined : 'Required';
     const requiredEmail = (val) => val &&  /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val) ? undefined : 'Required';
-    const requiredMinMaxLength = (val) => val && val.length >= 5 && val.length <= 200 ? undefined : 'Required';
+    const requiredMinMaxLength = (val) => val && val.length >= 5 && val.length <= 350 ? undefined : 'Required';
     
-    
-    const showResults = (values) => {        
-            const formLayout =  ({
-                firstName: values.firstName,
-                lastName: values.lastName,
-                emailAddress: values.emailAddress,  
-                messageBody: values.messageBody,
-            });
-        
-            const formValid = formLayout => {
-                // let valid = true;
-                let valid = false;
-                Object.values(formLayout).forEach(val => { val.length > 0 && (valid = true)
-                });
-                return valid;
-            };
-            
-        if (formValid(formLayout)) {
-            // alert(JSON.stringify(values));
-            const firstName = values.firstName
-            const lastName = values.lastName
-            const emailAddress = values.emailAddress 
-            const messageBody = values.messageBody
-            alert(JSON.stringify({firstName, lastName, emailAddress, messageBody}));
-            // DISPATCH SEND MESSAGE
-        } else {
-            alert('Invalid - From must be submitted properly')
-            // throw new Error('Invalid - From must be submitted properly')
-        }
-    }
 
+    const handleChange = () => {
+
+    }
+    
+    const showResults = async ({firstName, lastName, email, messageBody}) => {        
+        if (firstName !== undefined && lastName !== undefined && email !== undefined && messageBody !== undefined) {
+                    dispatch(createMessage(firstName, lastName, email, messageBody))
+                    if (success) {
+                        setFormSubmitted('Success - Form submitted')
+                    } 
+                    if (error) {
+                        setMessageAlert('Invalid - Form must be submitted properly')
+                    }
+                } 
+            }
+        
+
+        const sleep = (ms) => {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        useEffect( async () => {
+            // if (success) {
+            //     setFormSubmitted('Success - Form submitted')
+            // } 
+            // if (error) {
+            //     setMessageAlert('Invalid - Form must be submitted properly')
+            // }
+                await sleep(4000);
+                setFormSubmitted(null)
+                setMessageAlert(null)
+                
+            },[ success, error ])
 
     return (
        <FormContainer > 
             <h3 className='title'>Contact Us</h3>
-           {/* {error && <Message variant='danger'>{error}</Message>}
-            {loading && <Loader />} */}
+            {/* {messageAlert && <Message variant='danger'>{messageAlert}</Message>} */}
+            {/* {messageAlert !== null ? (messageAlert && <Message variant='danger'>{messageAlert}</Message>) : (formSubmitted && <Message variant='success'>{formSubmitted}</Message>)} */}
+            {success === true ? (formSubmitted && <Message variant='success'>{formSubmitted}</Message>) : error !== undefined ? (messageAlert && <Message variant='danger'>{messageAlert}</Message>) : null}
+            {/* {formSubmitted && <Message variant='success'>{formSubmitted}</Message>} */}
+           {/* {error && <Message variant='danger'>{error}</Message>} */}
+            {loading && <Loader />}
 
 
             
             <Form onSubmit={showResults} subscription={{ submitting: true }} >
-            {({handleSubmit, values, submitting}) => ( 
-                <form onSubmit={handleSubmit} >
+            {({handleSubmit, values, submitting, form, reset}) => ( 
+                <form onSubmit={(event) => { const promise = handleSubmit(event); promise && promise.then(() => { form.reset(); }); return promise; }} >
                     <Field name='firstName' className='field-input' placeholder='Enter first name' validate={requiredLetterCount} subscription={{ value: true, error: true, touched: true, active: true }} >
                             {({input, meta, placeholder}) => (
                                 <div className={meta.active ? 'active' : ''}>
@@ -102,12 +91,12 @@ const ContactUsView = () => {
                             {({input, meta, placeholder}) => (
                                 <div className={meta.active ? 'active' : ''}>
                                     <label style={{paddingTop: '2em', verticalAlign: 'top', paddingRight: '1em', display: 'block'}}>Last Name</label>
-                                    <input {...input} placeholder={placeholder} style={{width: '80%', padding: '0.5em',  borderColor: 'lightgrey', borderRadius: '2%' }} />
+                                    <input {...input}  placeholder={placeholder} style={{width: '80%', padding: '0.5em',  borderColor: 'lightgrey', borderRadius: '2%' }} />
                                     {meta.error && meta.touched && <span style={{padding: '1em', color: 'red'}}>{meta.error}</span>}
                                 </div>
                             )}
                         </Field>
-                        <Field name='emailAddress' placeholder='Enter email' validate={requiredEmail} subscription={{ value: true, error: true, touched: true, active: true }} >
+                        <Field name='email' placeholder='Enter email' validate={requiredEmail} default='' subscription={{ value: true, error: true, touched: true, active: true }} >
                             {({input, meta, placeholder}) => (
                                 <div className={meta.active ? 'active' : ''}>
                                     <label style={{ paddingTop: '2em', verticalAlign: 'top', paddingRight: '1em', display: 'block'}}>Email</label>
@@ -125,7 +114,7 @@ const ContactUsView = () => {
                                 </div>
                             )}
                         </Field>
-                <Button type='submit' style={{margin: '2rem 0', width: '8rem'}} disabled={submitting}>Submit</Button>
+                <Button type='submit' style={{margin: '2rem 0', width: '8rem'}} disabled={submitting} >Submit</Button>
                 {/* <FormSpy subscription={{values:true}}>{({values}) => <pre>{JSON.stringify(values)}</pre>}</FormSpy>     */}
             </form>
             )}

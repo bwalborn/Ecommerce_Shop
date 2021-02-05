@@ -17,6 +17,7 @@ import UserListView from './views/UserListView';
 import ContactUsView from './views/ContactUsView';
 import UserEditView from './views/UserEditView';
 import ProductListView from './views/ProductListView';
+import MessageListView from './views/MessageListView';
 
 
 
@@ -40,6 +41,7 @@ const App = () => {
               <Route path='/product/:id' component={ProductView} />
               <Route path='/cart/:id?' component={CartView} />
               <Route path='/admin/userlist' component={UserListView} />
+              <Route path='/admin/messagelist' component={MessageListView} />
               <Route path='/admin/user/:id/edit' component={UserEditView} />
               <Route path='/admin/productlist' component={ProductListView} />
               <Route path='/' component={HomeView} exact />
