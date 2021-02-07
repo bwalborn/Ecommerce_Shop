@@ -11,44 +11,57 @@ import { PRODUCT_CREATE_RESET } from '../constants/productConstants';
 
 const ProductListView = ({ history, match }) => {
     const dispatch = useDispatch();
-
-    const productList = useSelector(state => state.productList);
-    const { loading, error, products } = productList;
-
-    const productDelete = useSelector(state => state.productDelete);
-    const { loading:loadingDelete, error:errorDelete, success:successDelete } = productDelete;
-
-    const productCreate = useSelector(state => state.productCreate);
-    const { loading:loadingCreate, error:errorCreate, success:successCreate, product:createdProduct } = productCreate;
-
-    const userLogin = useSelector(state => state.userLogin);
-    const { userInfo } = userLogin;
-
-
+            
+    const productList = useSelector((state) => state.productList)
+    const { loading, error, products } = productList
+    
+    const productDelete = useSelector((state) => state.productDelete)
+    const {
+        loading: loadingDelete,
+        error: errorDelete,
+        success: successDelete,
+    } = productDelete
+    
+    const productCreate = useSelector((state) => state.productCreate)
+    const {
+        loading: loadingCreate,
+        error: errorCreate,
+        success: successCreate,
+        product: createdProduct,
+    } = productCreate
+    
+    const userLogin = useSelector((state) => state.userLogin)
+    const { userInfo } = userLogin
+    
     useEffect(() => {
-        dispatch({ type: PRODUCT_CREATE_RESET });
-
-        if(!userInfo || !userInfo.isAdmin) {
-            history.push('/login')
+        dispatch({ type: PRODUCT_CREATE_RESET })
+    
+        if (!userInfo || !userInfo.isAdmin) {
+        history.push('/login')
         }
-
+    
         if (successCreate) {
-            history.push(`/admin/products/${createProduct._id}/edit`)
+        history.push(`/admin/product/${createdProduct._id}/edit`)
         } else {
-            dispatch(listProducts())
+        dispatch(listProducts())
         }
-        // eslint-disable-next-line
-    }, [dispatch, history, userInfo, successDelete, successCreate, createProduct ])
-
+    }, [
+        dispatch,
+        history,
+        userInfo,
+        successDelete,
+        successCreate,
+        createdProduct,
+    ])
+    
     const deleteHandler = (id) => {
-        if(window.confirm('Are you sure you want to delete?')) {
-            // DELETE PRODUCTS
-            dispatch(deleteProduct(id));
+        if (window.confirm('Are you sure you want to delete?')) {
+        dispatch(deleteProduct(id))
         }
     }
-
+    
     const createProductHandler = () => {
-        dispatch(createProduct());
+        dispatch(createProduct())
     }
     
     return (
