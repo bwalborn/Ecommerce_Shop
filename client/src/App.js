@@ -19,6 +19,7 @@ import UserEditView from './views/UserEditView';
 import ProductListView from './views/ProductListView';
 import MessageListView from './views/MessageListView';
 import ProductEditView from './views/ProductEditView';
+import OrderListView from './views/OrderListView';
 
 
 
@@ -46,6 +47,7 @@ const App = () => {
               <Route path='/admin/messagelist' component={MessageListView} />
               <Route path='/admin/user/:id/edit' component={UserEditView} />
               <Route path='/admin/productlist' component={ProductListView} />
+              <Route path='/admin/orderlist' component={OrderListView} />
               <Route path='/' component={HomeView} exact />
 
             </Container>

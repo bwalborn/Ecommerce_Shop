@@ -71,7 +71,7 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
         res.json(updateOrder)
 
         // Send an email to myself when the order is paid
-        // SEND EMAIL
+        // SEND EMAIL -> PASS INFO THROUGH
         
     } else {
         res.status(404);
@@ -79,6 +79,29 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
     }
 })
 
+
+// @desc      Update order to delivered
+// @route     GET /api/orders/:id/deliver
+// @access    Private/Admin
+const updateOrderToDelivered = asyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+
+    if(order) {
+        order.isDelivered = true;
+        order.deliveredAt = Date.now();
+      
+        const updateOrder = await order.save();
+
+        res.json(updateOrder)
+
+        // Send an email 
+        // SEND EMAIL -> PASS INFO THROUGH FOR TRACKING INFO
+        
+    } else {
+        res.status(404);
+        throw new Error('Order not found')
+    }
+})
 
 
 
@@ -90,4 +113,14 @@ const getMyOrders = asyncHandler(async (req, res) => {
     res.json(orders)
 })
 
-export { addOrderItems, getOrderById, updateOrderToPaid, getMyOrders };
+
+
+// @desc      Get all orders
+// @route     GET /api/orders
+// @access    Private/Admin
+const getOrders = asyncHandler(async (req, res) => {
+    const orders = await Order.find({}).populate('user', 'id name')
+    res.json(orders)
+})
+
+export { addOrderItems, getOrderById, updateOrderToPaid, getMyOrders, getOrders, updateOrderToDelivered };
