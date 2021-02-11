@@ -70,6 +70,9 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 
         res.json(updateOrder)
 
+        // Send an email to myself when the order is paid
+        // SEND EMAIL
+        
     } else {
         res.status(404);
         throw new Error('Order not found')

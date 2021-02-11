@@ -53,7 +53,8 @@ const ProductEditView = ({ match, history }) => {
       }, [dispatch, history, productId, product, successUpdate])
     
       const uploadFileHandler = async (e) => {
-        // const file = e.target.files // -> array of images
+        // const file = e.target.files // -> array of images (no index needed)
+        // const file = e.target.files[1] === undfined ? e.target.files[0] : e.target.files;   /–> will check if array
         const file = e.target.files[0]
         const formData = new FormData()
         formData.append('image', file) 
